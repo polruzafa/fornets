@@ -1,28 +1,31 @@
-/* Fosc per defecte (ús nocturn i a l'exterior); clar com a mode secundari. */
+/*
+ * Paleta natural: paper de camp, tinta, molsa i terracota — càlida i
+ * artesanal, gens corporativa. Sempre clara: és un catàleg per fullejar,
+ * i les fotos llueixen sobre paper (el mode fosc queda per a l'app).
+ * Conserva els noms de tokens semàntics de l'app (bg, surface, brand, ember…)
+ * encara que els valors siguin propis del web.
+ */
 :root {
-  --bg: #121714;
-  --surface: #1b2420;
-  --border: #2d3a32;
-  --text: #e9ede9;
-  --text-muted: #9db0a3;
-  --brand: #5cb878;
-  --brand-strong: #357a42;
-  --ember: #f97316;
+  --bg: #f2eddd;
+  --surface: #faf6ea;
+  --surface-muted: #ece5d0;
+  --border: #d9d0b6;
+  --border-strong: #bfb494;
 
-  color-scheme: dark light;
-}
+  --text: #2e2a1d;
+  --text-strong: #4a442f;
+  --text-secondary: #6e6750;
+  --text-faint: #948b70;
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f5f6f3;
-    --surface: #ffffff;
-    --border: #d9ded8;
-    --text: #20302a;
-    --text-muted: #5c6b60;
-    --brand: #2a6235;
-    --brand-strong: #357a42;
-    --ember: #ea580c;
-  }
+  --brand: #4d6b34;
+  --brand-text: #44602e;
+  --brand-surface: #e2e6cd;
+  --ember: #b85f24;
+
+  --font-text: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'Courier Prime', 'Courier New', monospace;
+
+  color-scheme: light;
 }
 
 * {
@@ -33,23 +36,50 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-text);
+  font-optical-sizing: auto;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Atmosfera: escalfor de molsa i brasa al capdamunt, molt continguda. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 28rem at 75% -8%, color-mix(in oklab, var(--brand) 9%, transparent), transparent 70%),
+    radial-gradient(38rem 22rem at -5% -4%, color-mix(in oklab, var(--ember) 7%, transparent), transparent 70%);
+}
+
+::selection {
+  background: var(--brand);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-text);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .container {
-  max-width: 44rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
 
 a {
-  color: var(--brand);
+  color: var(--brand-text);
 }
+
+/* ── Capçalera i peu ─────────────────────────────────────────── */
 
 header.site {
   border-bottom: 1px solid var(--border);
-  padding: 1.25rem 0;
+  padding: 1.1rem 0;
 }
 
 header.site .container {
@@ -67,107 +97,154 @@ header.site a.title {
   color: var(--text);
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.01em;
+  font-size: 1.35rem;
+  font-variation-settings: 'SOFT' 40, 'WONK' 1;
 }
 
 main {
-  padding: 2rem 0 4rem;
+  padding: 2.5rem 0 5rem;
 }
 
 footer.site {
   border-top: 1px solid var(--border);
   padding: 1.5rem 0 3rem;
-  color: var(--text-muted);
-  font-size: 0.875rem;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
 }
 
-/* Llista del catàleg: tires dividides, no quadrícula de targetes. */
-ul.cataleg {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--border);
-}
-
-ul.cataleg li {
-  border-bottom: 1px solid var(--border);
-}
-
-ul.cataleg a {
-  display: block;
-  padding: 1rem 0.25rem;
-  text-decoration: none;
-  color: inherit;
-}
-
-ul.cataleg a:hover .nom,
-ul.cataleg a:focus-visible .nom {
-  color: var(--brand);
-}
-
-ul.cataleg .nom {
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-
-ul.cataleg .marca {
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-ul.cataleg .meta {
-  margin-top: 0.15rem;
-  color: var(--text-muted);
-  font-size: 0.875rem;
-}
-
-/* Fitxa tècnica: l'única targeta de la pàgina, el punt focal. */
-dl.fitxa {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 0.5rem 1.25rem;
-  margin: 1.5rem 0;
-}
-
-dl.fitxa > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-dl.fitxa > div:last-child {
-  border-bottom: none;
-}
-
-dl.fitxa dt {
-  color: var(--text-muted);
-}
-
-dl.fitxa dd {
-  margin: 0;
-  font-weight: 600;
-  text-align: right;
-}
-
-.tornar {
-  font-size: 0.9rem;
-}
+/* ── Tipografia de pàgina ────────────────────────────────────── */
 
 h1 {
-  font-size: 1.7rem;
-  line-height: 1.25;
-  margin: 0.5rem 0 0.25rem;
+  font-weight: 620;
+  font-size: clamp(2.3rem, 6vw, 3.4rem);
+  line-height: 1.02;
+  font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  letter-spacing: -0.01em;
+  margin: 0.25rem 0 0.5rem;
+  text-wrap: balance;
 }
 
 p.subtitol {
-  color: var(--text-muted);
-  margin-top: 0;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 38rem;
+  font-size: 1.05rem;
 }
 
-article.cos {
-  margin-top: 1.5rem;
+/* Línia de context a màquina d'escriure, amb el punt de brasa. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--ember);
+  box-shadow: 0 0 10px 1px color-mix(in oklab, var(--ember) 60%, transparent);
+}
+
+/* ── Escenari de la foto (compartit targeta/fitxa) ───────────── */
+
+.escenari {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+/* Gra fi, com de paper de camp. */
+.escenari::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.escenari img.foto-fornet {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Avís de baixa: només apareix quan el fornet no funciona. */
+.escenari .xapa-avaria {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ember);
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  border: 1px dashed var(--ember);
+  border-radius: 3px;
+  padding: 0.2rem 0.6rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Etiqueta de material: com una tira de cinta adhesiva retolada. */
+.escenari .xapa-material {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-strong);
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  border: 1px dashed var(--border-strong);
+  border-radius: 3px;
+  padding: 0.2rem 0.6rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Mentre no hi ha foto: marc de retall buit, honest i a màquina. */
+.foto-pendent {
+  position: absolute;
+  inset: 0.9rem;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 8px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.6rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.foto-pendent svg {
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

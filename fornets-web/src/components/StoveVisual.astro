@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+/**
+ * La foto d'un fornet, o un marc de retall buit («foto pendent») mentre
+ * no n'hi ha. Les fotos es preparen amb `pnpm fotos` (quadrades, 1:1).
+ */
+interface Props {
+  fornet: CollectionEntry<'fornets'>;
+}
+
+const { fornet } = Astro.props;
+const { data } = fornet;
+---
+
+{
+  data.imatge ? (
+    <Image class="foto-fornet" src={data.imatge} alt={data.imatgeAlt ?? data.nom} width={760} />
+  ) : (
+    <div class="foto-pendent" role="img" aria-label={`${data.nom}: foto pendent`}>
+      <svg
+        width="30"
+        height="30"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 2c.5 3.5-1.5 5.5-3 7.5C7.4 11.6 6 13.4 6 16a6 6 0 0 0 12 0c0-2.2-1-4-2.2-5.6-.4 1-1 1.9-1.8 2.4.3-3.3-.6-7.6-2-10.8Z" />
+      </svg>
+      <span>foto pendent…</span>
+    </div>
+  )
+}

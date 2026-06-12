@@ -1,30 +1,47 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import StoveVisual from '../components/StoveVisual.astro';
 
 const fornets = (await getCollection('fornets')).sort((a, b) =>
   a.data.nom.localeCompare(b.data.nom, 'ca')
 );
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** Decimals amb coma, com toca en català (4.7 → «4,7»). */
+const fmt = (n: number) => String(n).replace('.', ',');
+
+/** Segons → «m:ss» (280 → «4:40»). */
+const mmss = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 ---
 
 <Base title="Fornets — catàleg de fornets d'alcohol">
-  <h1>Catàleg</h1>
-  <p class="subtitol">
-    Fornets d'alcohol per a la motxilla: especificacions clares, sense floritures.
-  </p>
   <ul class="cataleg">
     {
-      fornets.map((fornet) => (
-        <li>
+      fornets.map((fornet, i) => (
+        <li style={`--i: ${i}`}>
           <a href={`${base}/fornet/${fornet.id}/`}>
-            <div class="nom">
-              {fornet.data.nom}
-              {fornet.data.marca && <span class="marca"> · {fornet.data.marca}</span>}
+            <div class="escenari">
+              {!fornet.data.funciona && <span class="xapa-avaria">no funciona</span>}
+              <StoveVisual fornet={fornet} />
             </div>
-            <div class="meta">
-              {fornet.data.pesG} g · {fornet.data.material} · {fornet.data.tempsEbullicio300Min} min
-              per a 300 ml
+            <div class="peu">
+              <h2 class="nom">{fornet.data.nom}</h2>
+              <p class="marca">{fornet.data.marca ?? ' '}</p>
+              <dl class="xifres">
+                <div>
+                  <dt>Pes</dt>
+                  <dd>{fmt(fornet.data.pesG)} g</dd>
+                </div>
+                <div>
+                  <dt>Ebullició 300 ml</dt>
+                  <dd class:list={[!fornet.data.tempsEbullicio300S && 'pendent']}>
+                    {fornet.data.tempsEbullicio300S
+                      ? mmss(fornet.data.tempsEbullicio300S)
+                      : 'pendent'}
+                  </dd>
+                </div>
+              </dl>
             </div>
           </a>
         </li>
@@ -32,3 +49,97 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
   </ul>
 </Base>
+
+<style>
+  ul.cataleg {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.5rem 1.25rem;
+  }
+
+  ul.cataleg li {
+    animation: apareix 0.5s ease-out backwards;
+    animation-delay: calc(var(--i) * 80ms);
+  }
+
+  @keyframes apareix {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  ul.cataleg a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul.cataleg .escenari {
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  ul.cataleg a:hover .escenari,
+  ul.cataleg a:focus-visible .escenari {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    box-shadow: 0 14px 30px -18px color-mix(in oklab, var(--ember) 40%, transparent);
+  }
+
+  .peu {
+    padding: 0.85rem 0.25rem 0;
+  }
+
+  .nom {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  ul.cataleg a:hover .nom,
+  ul.cataleg a:focus-visible .nom {
+    color: var(--brand-text);
+  }
+
+  .marca {
+    margin: 0.1rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+
+  dl.xifres {
+    display: flex;
+    gap: 1.4rem;
+    margin: 0.7rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--border);
+  }
+
+  dl.xifres dt {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--text-faint);
+  }
+
+  dl.xifres dd {
+    margin: 0.1rem 0 0;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text-strong);
+  }
+
+  dl.xifres dd.pendent {
+    color: var(--text-faint);
+    font-weight: 400;
+  }
+</style>
