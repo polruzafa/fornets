@@ -1,0 +1,67 @@
+[
+  {
+    "id": "seed_trangia_25",
+    "name": "Trangia Spirit Burner",
+    "brand": "Trangia",
+    "material": "brass",
+    "max_capacity_ml": 100,
+    "boil_time_300ml_s": 330,
+    "weight_g": 110,
+    "size": "medium",
+    "needs_pot_stand": true,
+    "notes": "El clàssic suec. Tapa amb junta per guardar combustible sobrant.",
+    "photo_uri": null
+  },
+  {
+    "id": "seed_evernew_ti",
+    "name": "Evernew Titanium Alcohol Stove",
+    "brand": "Evernew",
+    "material": "titanium",
+    "max_capacity_ml": 60,
+    "boil_time_300ml_s": 390,
+    "weight_g": 34,
+    "size": "small",
+    "needs_pot_stand": true,
+    "notes": "Titani ultralleuger, ideal per a rutes llargues.",
+    "photo_uri": null
+  },
+  {
+    "id": "seed_vargo_triad",
+    "name": "Vargo Triad",
+    "brand": "Vargo",
+    "material": "titanium",
+    "max_capacity_ml": 30,
+    "boil_time_300ml_s": 420,
+    "weight_g": 28,
+    "size": "small",
+    "needs_pot_stand": false,
+    "notes": "Potes plegables integrades. Multicombustible (alcohol/gel).",
+    "photo_uri": null
+  },
+  {
+    "id": "seed_diy_pepsi",
+    "name": "Pepsi-can DIY",
+    "brand": "Casolà",
+    "material": "aluminium",
+    "max_capacity_ml": 40,
+    "boil_time_300ml_s": 360,
+    "weight_g": 12,
+    "size": "small",
+    "needs_pot_stand": true,
+    "notes": "Fet amb dues llaunes de refresc. Barat i lleuger.",
+    "photo_uri": null
+  },
+  {
+    "id": "seed_toaks_siphon",
+    "name": "TOAKS Siphon",
+    "brand": "TOAKS",
+    "material": "titanium",
+    "max_capacity_ml": 50,
+    "boil_time_300ml_s": 345,
+    "weight_g": 30,
+    "size": "small",
+    "needs_pot_stand": true,
+    "notes": "Sistema de metxa per a una flama estable.",
+    "photo_uri": null
+  }
+]

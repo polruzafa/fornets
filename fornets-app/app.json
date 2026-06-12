@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Fornet",
+    "slug": "fornet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "fornet",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fornet.app"
+    },
+    "android": {
+      "package": "com.fornet.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0b0f14"
+      }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "L'aplicació necessita accés a les fotos per adjuntar imatges dels fornets."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Catàleg de fornets d'alcohol per a excursionistes i aficionats." } =
+  Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site">
+      <div class="container">
+        <svg
+          class="flame"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 2c.5 3.5-1.5 5.5-3 7.5C7.4 11.6 6 13.4 6 16a6 6 0 0 0 12 0c0-2.2-1-4-2.2-5.6-.4 1-1 1.9-1.8 2.4.3-3.3-.6-7.6-2-10.8Z"
+          ></path>
+        </svg>
+        <a class="title" href={`${base}/`}>Fornets</a>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+    <footer class="site">
+      <div class="container">Fornets — catàleg de fornets d'alcohol. Fet a foc lent.</div>
+    </footer>
+  </body>
+</html>

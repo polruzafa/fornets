@@ -1,0 +1,173 @@
+/* Fosc per defecte (ús nocturn i a l'exterior); clar com a mode secundari. */
+:root {
+  --bg: #121714;
+  --surface: #1b2420;
+  --border: #2d3a32;
+  --text: #e9ede9;
+  --text-muted: #9db0a3;
+  --brand: #5cb878;
+  --brand-strong: #357a42;
+  --ember: #f97316;
+
+  color-scheme: dark light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f6f3;
+    --surface: #ffffff;
+    --border: #d9ded8;
+    --text: #20302a;
+    --text-muted: #5c6b60;
+    --brand: #2a6235;
+    --brand-strong: #357a42;
+    --ember: #ea580c;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+a {
+  color: var(--brand);
+}
+
+header.site {
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 0;
+}
+
+header.site .container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+header.site .flame {
+  color: var(--ember);
+  flex-shrink: 0;
+}
+
+header.site a.title {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+main {
+  padding: 2rem 0 4rem;
+}
+
+footer.site {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0 3rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Llista del catàleg: tires dividides, no quadrícula de targetes. */
+ul.cataleg {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+ul.cataleg li {
+  border-bottom: 1px solid var(--border);
+}
+
+ul.cataleg a {
+  display: block;
+  padding: 1rem 0.25rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+ul.cataleg a:hover .nom,
+ul.cataleg a:focus-visible .nom {
+  color: var(--brand);
+}
+
+ul.cataleg .nom {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+ul.cataleg .marca {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+ul.cataleg .meta {
+  margin-top: 0.15rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Fitxa tècnica: l'única targeta de la pàgina, el punt focal. */
+dl.fitxa {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 0.5rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+dl.fitxa > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+dl.fitxa > div:last-child {
+  border-bottom: none;
+}
+
+dl.fitxa dt {
+  color: var(--text-muted);
+}
+
+dl.fitxa dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+.tornar {
+  font-size: 0.9rem;
+}
+
+h1 {
+  font-size: 1.7rem;
+  line-height: 1.25;
+  margin: 0.5rem 0 0.25rem;
+}
+
+p.subtitol {
+  color: var(--text-muted);
+  margin-top: 0;
+}
+
+article.cos {
+  margin-top: 1.5rem;
+}

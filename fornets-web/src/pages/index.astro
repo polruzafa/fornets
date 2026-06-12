@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const fornets = (await getCollection('fornets')).sort((a, b) =>
+  a.data.nom.localeCompare(b.data.nom, 'ca')
+);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="Fornets — catàleg de fornets d'alcohol">
+  <h1>Catàleg</h1>
+  <p class="subtitol">
+    Fornets d'alcohol per a la motxilla: especificacions clares, sense floritures.
+  </p>
+  <ul class="cataleg">
+    {
+      fornets.map((fornet) => (
+        <li>
+          <a href={`${base}/fornet/${fornet.id}/`}>
+            <div class="nom">
+              {fornet.data.nom}
+              {fornet.data.marca && <span class="marca"> · {fornet.data.marca}</span>}
+            </div>
+            <div class="meta">
+              {fornet.data.pesG} g · {fornet.data.material} · {fornet.data.tempsEbullicio300Min} min
+              per a 300 ml
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
