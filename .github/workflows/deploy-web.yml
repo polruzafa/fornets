@@ -26,6 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Historial sencer: la versió AAAAMMDD.N compta els commits del dia
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 11
