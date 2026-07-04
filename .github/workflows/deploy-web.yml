@@ -1,10 +1,14 @@
 name: Desplega la web a GitHub Pages
 
+# Publica un únic site de Pages amb dues apps:
+#   fornets-web  → https://polruzafa.github.io/fornets/
+#   for-gear     → https://polruzafa.github.io/fornets/for-gear/
 on:
   push:
     branches: [main]
     paths:
       - 'fornets-web/**'
+      - 'for-gear/**'
       - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
@@ -22,10 +26,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: withastro/action@v3
+      - uses: pnpm/action-setup@v4
         with:
-          path: ./fornets-web
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
           node-version: 24
+          cache: pnpm
+          cache-dependency-path: |
+            fornets-web/pnpm-lock.yaml
+            for-gear/pnpm-lock.yaml
+
+      - name: Construeix fornets-web
+        working-directory: fornets-web
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Construeix for-gear
+        working-directory: for-gear
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Ajunta for-gear dins del site, a /for-gear
+        run: cp -R for-gear/dist fornets-web/dist/for-gear
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: fornets-web/dist
 
   deploy:
     needs: build
